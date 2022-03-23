@@ -1,20 +1,21 @@
-import sys
-
-def solution() :
-
-    T = int(sys.stdin.readline())
-
-    for _ in range(T) :
-        n = int(sys.stdin.readline())
-        fibo = [(1,0), (0,1)]
-
-        if n == 0  or n == 1:
-            print(fibo[n][0], fibo[n][1])
-            continue
-
-        for i in range(2, n+1) :
-            fibo.append((fibo[i-1][0]+fibo[i-2][0], fibo[i-1][1]+fibo[i-2][1]))
-
-        print(fibo[-1][0], fibo[-1][1])
-
-solution()
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        
+        dp = [ [ False for i in range(len(s)) ] for j in range(len(s)) ]
+        res = s[0]
+        max_len = 1
+        
+        for i in range(len(s)) :
+            dp[i][i] = True
+        
+        for j in range(1,len(s)) :
+            for i in range(j) :
+                if s[i] == s[j] :
+                    if j-i == 1 or dp[i+1][j-1] :
+                        dp[i][j] = True
+                        if j-i+1 > max_len :
+                            res = s[i:j+1]
+                            max_len = j-i+1           
+    
+        
+        return res
